@@ -1,9 +1,15 @@
 roll_dice
 =====
 
-An OTP application
+Run the project:
 
-Build
------
+```
+$ OTEL_EXPORTER_OTLP_PROTOCOL=grpc OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 rebar3 shell
+```
 
-    $ rebar3 compile
+Roll a die:
+
+```
+$ curl localhost:3000/rolldice
+4
+```
