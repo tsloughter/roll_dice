@@ -1,0 +1,27 @@
+version: "3"
+services:
+  otel:
+    image: otel/opentelemetry-collector-contrib:0.76.3
+    command: ["--config=/conf/otel-collector-config.yaml"]
+    privileged: true
+    ports:
+      - 4317:4317
+      - 4318:4318
+    volumes:
+      - ./otel-collector-config.yaml:/conf/otel-collector-config.yaml
+    links:
+      - zipkin
+
+  zipkin:
+    image: openzipkin/zipkin-slim
+    ports:
+      - 9411:9411
+    privileged: true
+
+  jaeger-all-in-one:
+    image: jaegertracing/all-in-one:latest
+    restart: always
+    ports:
+      - "16686:16686"
+      - "14268"
+      - "14250"
