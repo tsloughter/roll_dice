@@ -1,0 +1,6 @@
+-sname roll_dice
+
+-setcookie roll_dice_cookie
+
++K true
++A30
