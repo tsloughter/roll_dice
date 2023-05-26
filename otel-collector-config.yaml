@@ -5,17 +5,19 @@ receivers:
       grpc:
         endpoint: "0.0.0.0:4317"
       http:
+        cors:
+          allowed_origins:
+          - "http://localhost:3000"
+          # allowed_headers:
+          # - "*"
         endpoint: "0.0.0.0:4318"
 processors:
   batch:
     send_batch_size: 1024
     timeout: 5s
 exporters:
-  zipkin:
-    endpoint: "http://zipkin:9411/api/v2/spans"
-
-  jaeger:
-    endpoint: jaeger-all-in-one:14250
+  otlp:
+    endpoint: jaeger-all-in-one:4317
     tls:
       insecure: true
 
@@ -26,12 +28,15 @@ exporters:
 extensions:
   zpages: {}
 service:
+  telemetry:
+    logs:
+      level: "debug"
   extensions: [zpages]
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, zipkin, jaeger]
+      exporters: [logging, otlp]
     metrics:
       receivers: [otlp]
       processors: [batch]

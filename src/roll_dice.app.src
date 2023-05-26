@@ -8,7 +8,8 @@
     stdlib,
     elli,
     opentelemetry_api,
-    opentelemetry_api_experimental
+    opentelemetry_api_experimental,
+    opentelemetry_elli
    ]},
   {env,[]},
   {modules, []},

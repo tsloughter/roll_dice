@@ -23,8 +23,11 @@ init([]) ->
                  intensity => 5,
                  period => 10},
 
-    ElliOpts = [{callback, roll_dice_handler},
+    ElliOpts = [{callback, elli_middleware},
+                {callback_args, [{mods, [{otel_elli_middleware, []},
+                                         {roll_dice_handler, []}]}]},
                 {port, Port}],
+
 
     ChildSpecs = [#{id => roll_dice_http,
                     start => {elli, start_link, [ElliOpts]},
